@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate compose
+        run: docker compose config
+
+      - name: Build image
+        run: docker compose build
+
+      - name: Smoke test
+        run: docker compose run --rm sunday openclaw --version

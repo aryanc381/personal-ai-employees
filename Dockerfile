@@ -15,4 +15,4 @@ WORKDIR /app
 
 EXPOSE 18789
 
-CMD ["sh", "-lc", "openclaw --version && tail -f /dev/null"]
+CMD ["openclaw", "gateway", "run", "--allow-unconfigured", "--bind", "auto", "--auth", "token", "--port", "18789"]

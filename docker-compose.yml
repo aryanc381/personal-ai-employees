@@ -5,6 +5,8 @@ services:
       args:
         OPENCLAW_VERSION: ${OPENCLAW_VERSION:-2026.6.11}
     container_name: sunday-openclaw
+    environment:
+      OPENCLAW_GATEWAY_TOKEN: ${OPENCLAW_GATEWAY_TOKEN:-dev-token-change-me}
     ports:
       - "${OPENCLAW_PORT:-18789}:18789"
     volumes:
