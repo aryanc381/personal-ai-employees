@@ -96,3 +96,19 @@ If your local OpenClaw already uses port `18789`, run this test container on ano
 ```bash
 OPENCLAW_PORT=18790 docker compose up -d --build
 ```
+
+## Phase 5: GitHub Auto Deploy
+
+Pushes to `p3-gateway` deploy to the VPS.
+
+Required GitHub secret:
+
+```text
+VPS_SSH_KEY
+```
+
+The VPS runs:
+
+```bash
+bash scripts/deploy-vps.sh
+```
