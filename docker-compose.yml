@@ -7,8 +7,11 @@ services:
     container_name: sunday-openclaw
     environment:
       OPENCLAW_GATEWAY_TOKEN: ${OPENCLAW_GATEWAY_TOKEN:-dev-token-change-me}
+      GOG_KEYRING_PASSWORD: ${GOG_KEYRING_PASSWORD:-dev-gog-keyring-password-change-me}
     ports:
       - "${OPENCLAW_BIND:-127.0.0.1}:${OPENCLAW_PORT:-18789}:18789"
     volumes:
       - "${OPENCLAW_STATE_DIR:-./state/openclaw}:/home/sunday/.openclaw"
+      - "${GOG_CONFIG_DIR:-./state/gogcli/config}:/home/sunday/.config/gogcli"
+      - "${GOG_DATA_DIR:-./state/gogcli/data}:/home/sunday/.local/share/gogcli"
     restart: unless-stopped
