@@ -2,7 +2,7 @@
 set -euo pipefail
 
 APP_DIR="${APP_DIR:-/opt/sunday-openclaw}"
-DEPLOY_BRANCH="${DEPLOY_BRANCH:-p3-gateway}"
+DEPLOY_BRANCH="${DEPLOY_BRANCH:-main}"
 
 cd "$APP_DIR"
 

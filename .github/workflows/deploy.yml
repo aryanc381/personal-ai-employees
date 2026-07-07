@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - p3-gateway
+      - main
 
 jobs:
   deploy:
@@ -21,4 +21,10 @@ jobs:
       - name: Deploy on VPS
         run: |
           ssh -i ~/.ssh/sunday_deploy root@168.144.67.216 \
-            'cd /opt/sunday-openclaw && APP_DIR=/opt/sunday-openclaw DEPLOY_BRANCH=p3-gateway bash scripts/deploy-vps.sh'
+            'set -e
+             cd /opt/sunday-openclaw
+             git fetch origin main
+             git checkout main
+             git reset --hard origin/main
+             docker compose up -d --build
+             docker compose ps'
