@@ -22,16 +22,16 @@ The compose file mounts it into the container:
 Use a stable host path:
 
 ```text
-/var/lib/sunday-openclaw/openclaw
-/var/lib/sunday-openclaw/gogcli
+/var/lib/the-ai-council/openclaw
+/var/lib/the-ai-council/gogcli
 ```
 
 In production, mount it the same way:
 
 ```text
-/var/lib/sunday-openclaw/openclaw -> /home/sunday/.openclaw
-/var/lib/sunday-openclaw/gogcli/config -> /home/sunday/.config/gogcli
-/var/lib/sunday-openclaw/gogcli/data -> /home/sunday/.local/share/gogcli
+/var/lib/the-ai-council/openclaw -> /home/sunday/.openclaw
+/var/lib/the-ai-council/gogcli/config -> /home/sunday/.config/gogcli
+/var/lib/the-ai-council/gogcli/data -> /home/sunday/.local/share/gogcli
 ```
 
 ## What Lives Here

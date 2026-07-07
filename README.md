@@ -1,125 +1,27 @@
-# Sunday OpenClaw
+# The AI Council
+Building a layer of AI-Agents that communicate in an A2A manner and get things done for me or on my behalf. 
 
-Dockerized OpenClaw runtime for Sunday.
+## Goal
+The goal is to build two simple things - 
+1. **one ai-manager** - who is managing the council, this manager is the poc between me and the council, I will talk to the council via this manager. the goal of the manager is that the right ai agent is chosen to do a particular task, to ensure and update me when the task is done, and teach the ai agents things if I dont like a particular output. 
+2. **a council of ai employees** - each employee knows very well how to do a particular task, it has a personality, memory, etc.
 
-## Phase 1: Local Docker Baseline
+## Deployed Agents
+| Agent Name | Responsibility |
+|----------|----------|
+| Sunday   | She is my first ai agent, responsible to manage my calendars   |
 
-Create local env:
+## Deployment
 
-```bash
-cp .env.example .env
+```mermaid
+flowchart LR
+  A[git push main] --> B[GitHub Actions]
+  B --> C[VPS]
+  C --> D[Docker Compose]
+  D --> E[OpenClaw Gateway]
+  E --> F[Tailscale Serve :443]
 ```
 
-Build and start:
+Each agent runs in a Docker container on the VPS, deployed automatically via GitHub Actions on every push to `main`. The OpenClaw gateway is exposed through **Tailscale Serve** — no ports open to the public internet.
 
-```bash
-docker compose up -d --build
-```
-
-Check OpenClaw inside the container:
-
-```bash
-docker compose exec sunday openclaw --help
-docker compose exec sunday openclaw --version
-```
-
-View logs:
-
-```bash
-docker compose logs -f sunday
-```
-
-Stop:
-
-```bash
-docker compose down
-```
-
-OpenClaw state is mounted at:
-
-```text
-./state/openclaw -> /home/sunday/.openclaw
-```
-
-Do not commit `state/` or `.env`.
-
-## Phase 2: Persistent State
-
-OpenClaw state is intentionally stored outside the image and outside Git.
-
-Local development:
-
-```text
-./state/openclaw
-```
-
-VPS deployment:
-
-```text
-/var/lib/sunday-openclaw/openclaw
-```
-
-See [docs/state.md](docs/state.md).
-
-## Phase 3: OpenClaw Gateway Runtime
-
-The container now starts the OpenClaw gateway:
-
-```bash
-docker compose up -d --build
-```
-
-Check it:
-
-```bash
-docker compose ps
-docker compose logs -f sunday
-docker compose exec sunday openclaw gateway health
-```
-
-The local default gateway token is:
-
-```text
-dev-token-change-me
-```
-
-Change `OPENCLAW_GATEWAY_TOKEN` in `.env` before using this outside local development.
-
-For local development, recreate state if needed:
-
-```bash
-mkdir -p state/openclaw
-```
-
-If your local OpenClaw already uses port `18789`, run this test container on another host port:
-
-```bash
-OPENCLAW_PORT=18790 docker compose up -d --build
-```
-
-By default the gateway binds to `127.0.0.1` on the host. Use Tailscale Serve or an SSH
-tunnel for remote dashboard access instead of exposing `18789` publicly.
-
-## Phase 5: GitHub Auto Deploy
-
-Pushes to `main` deploy to the VPS.
-
-Required GitHub secret:
-
-```text
-VPS_SSH_KEY
-```
-
-The VPS runs:
-
-```bash
-bash scripts/deploy-vps.sh
-```
-
-## Model Auth
-
-Set this in `.env` on the VPS:
-
-```env
-OPENAI_API_KEY=your-openai-api-key
-```
+Tailscale uses **WireGuard encryption** — all traffic is end-to-end encrypted. The service is only accessible to devices inside my private tailnet. No public IP binding, no SSH tunnel, no firewall holes. Even with the IP, a connection is impossible without tailnet authentication. Access is further restricted via **ACLs** — only approved devices and users can reach the gateway.

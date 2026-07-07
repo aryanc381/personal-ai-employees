@@ -4,7 +4,7 @@ services:
       context: .
       args:
         OPENCLAW_VERSION: ${OPENCLAW_VERSION:-2026.6.11}
-    container_name: sunday-openclaw
+    container_name: the-ai-council
     environment:
       OPENCLAW_GATEWAY_TOKEN: ${OPENCLAW_GATEWAY_TOKEN:-dev-token-change-me}
       GOG_KEYRING_PASSWORD: ${GOG_KEYRING_PASSWORD:-dev-gog-keyring-password-change-me}

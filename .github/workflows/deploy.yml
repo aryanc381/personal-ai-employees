@@ -22,7 +22,7 @@ jobs:
         run: |
           ssh -i ~/.ssh/sunday_deploy root@168.144.67.216 \
             'set -e
-             cd /opt/sunday-openclaw
+             cd /opt/the-ai-council
              git fetch origin main
              git checkout main
              git reset --hard origin/main

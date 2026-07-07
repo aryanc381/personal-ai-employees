@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-APP_DIR="${APP_DIR:-/opt/sunday-openclaw}"
+APP_DIR="${APP_DIR:-/opt/the-ai-council}"
 DEPLOY_BRANCH="${DEPLOY_BRANCH:-main}"
 
 cd "$APP_DIR"
