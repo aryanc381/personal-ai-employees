@@ -1,0 +1,24 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - p3-gateway
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Add SSH key
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/sunday_deploy
+          chmod 600 ~/.ssh/sunday_deploy
+          ssh-keyscan -H 168.144.67.216 >> ~/.ssh/known_hosts
+
+      - name: Deploy on VPS
+        run: |
+          ssh -i ~/.ssh/sunday_deploy root@168.144.67.216 \
+            'cd /opt/sunday-openclaw && APP_DIR=/opt/sunday-openclaw DEPLOY_BRANCH=p3-gateway bash scripts/deploy-vps.sh'
