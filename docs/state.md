@@ -6,12 +6,15 @@ OpenClaw runtime state must live outside the Docker image.
 
 ```text
 ./state/openclaw
+./state/gogcli
 ```
 
 The compose file mounts it into the container:
 
 ```text
 ./state/openclaw -> /home/sunday/.openclaw
+./state/gogcli/config -> /home/sunday/.config/gogcli
+./state/gogcli/data -> /home/sunday/.local/share/gogcli
 ```
 
 ## VPS Path
@@ -20,12 +23,15 @@ Use a stable host path:
 
 ```text
 /var/lib/sunday-openclaw/openclaw
+/var/lib/sunday-openclaw/gogcli
 ```
 
 In production, mount it the same way:
 
 ```text
 /var/lib/sunday-openclaw/openclaw -> /home/sunday/.openclaw
+/var/lib/sunday-openclaw/gogcli/config -> /home/sunday/.config/gogcli
+/var/lib/sunday-openclaw/gogcli/data -> /home/sunday/.local/share/gogcli
 ```
 
 ## What Lives Here
@@ -34,6 +40,7 @@ In production, mount it the same way:
 OpenClaw config
 WhatsApp login/session
 Google Calendar auth
+gog encrypted keyring
 agent sessions
 media/cache/log state
 ```
