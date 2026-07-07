@@ -97,9 +97,12 @@ If your local OpenClaw already uses port `18789`, run this test container on ano
 OPENCLAW_PORT=18790 docker compose up -d --build
 ```
 
+By default the gateway binds to `127.0.0.1` on the host. Use Tailscale Serve or an SSH
+tunnel for remote dashboard access instead of exposing `18789` publicly.
+
 ## Phase 5: GitHub Auto Deploy
 
-Pushes to `p3-gateway` deploy to the VPS.
+Pushes to `main` deploy to the VPS.
 
 Required GitHub secret:
 
